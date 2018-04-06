@@ -89,14 +89,25 @@
 </div>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="what_you_ll_build"><a class="anchor" href="#what_you_ll_build"></a><a class="link" href="#what_you_ll_build">What you&#8217;ll build</a></h2>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>Building Gradle projects doesn&#8217;t stop with the developer&#8217;s machine.
-<a href="https://en.wikipedia.org/wiki/Continuous_integration">Continuous Integration</a> (CI) has been a long-established practice for running a build for every single change committed to version control to tighten the feedback loop.
-In this blog post, we&#8217;ll discuss how to configure Travis CI for a typical Gradle project.</p>
+<a href="https://en.wikipedia.org/wiki/Continuous_integration">Continuous Integration</a> (CI) has been a long-established practice for running a build for every single change committed to version control to tighten the feedback loop.</p>
 </div>
+<div class="paragraph">
+<p>In this guide, we&#8217;ll discuss how to configure <a href="https://travis-ci.org/">Travis CI</a> for a typical Gradle project.</p>
+</div>
+</div>
+<div id="toc" class="toc">
+<div id="toctitle">Contents</div>
+<ul class="sectlevel1">
+<li><a href="#what_you_ll_need">What you&#8217;ll need</a></li>
+<li><a href="#setup_a_typical_project">Setup a typical project</a></li>
+<li><a href="#configuring_travis_ci">Configuring Travis CI</a></li>
+<li><a href="#summary">Summary</a></li>
+<li><a href="#help_improve_this_guide">Help improve this guide</a></li>
+</ul>
 </div>
 </div>
 <div class="sect1">
@@ -124,18 +135,18 @@ In this blog post, we&#8217;ll discuss how to configure Travis CI for a typical 
 </div>
 </div>
 <div class="sect1">
-<h2 id="building_a_typical_java_project"><a class="anchor" href="#building_a_typical_java_project"></a><a class="link" href="#building_a_typical_java_project">Building a typical Java project</a></h2>
+<h2 id="setup_a_typical_project"><a class="anchor" href="#setup_a_typical_project"></a><a class="link" href="#setup_a_typical_project">Setup a typical project</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>As example, this post is going to discuss a Java-based project.
-More specifically, the project is a Gradle plugin written in Java and tested with the <a href="http://spockframework.org/">Spock framework</a>.
+<p>As example, this guide is going to focus on a Java-based project.
+More specifically, a Gradle plugin written in Java and tested with Spock.
 First, we&#8217;ll get the project set up on your local machine before covering the same steps on CI.</p>
 </div>
 <div class="paragraph">
 <p>Just follow these steps:</p>
 </div>
 <div class="sect2">
-<h3 id="clone_a_href_https_github_com_gradle_guides_gradle_site_plugin_gradle_site_plugin_a"><a class="anchor" href="#clone_a_href_https_github_com_gradle_guides_gradle_site_plugin_gradle_site_plugin_a"></a><a class="link" href="#clone_a_href_https_github_com_gradle_guides_gradle_site_plugin_gradle_site_plugin_a">Clone <a href="https://github.com/gradle-guides/gradle-site-plugin">Gradle Site Plugin</a></a></h3>
+<h3 id="clone_a_href_https_github_com_gradle_guides_gradle_site_plugin_gradle_site_plugin_a_repository"><a class="anchor" href="#clone_a_href_https_github_com_gradle_guides_gradle_site_plugin_gradle_site_plugin_a_repository"></a><a class="link" href="#clone_a_href_https_github_com_gradle_guides_gradle_site_plugin_gradle_site_plugin_a_repository">Clone <a href="https://github.com/gradle-guides/gradle-site-plugin">Gradle Site Plugin</a> repository</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre>git clone https://github.com/gradle-guides/gradle-site-plugin.git
@@ -144,7 +155,7 @@ cd gradle-site-plugin</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="executing_the_build"><a class="anchor" href="#executing_the_build"></a><a class="link" href="#executing_the_build">Executing the build</a></h3>
+<h3 id="build_the_project"><a class="anchor" href="#build_the_project"></a><a class="link" href="#build_the_project">Build the project</a></h3>
 <div class="paragraph">
 <p>As a developer of a Java project, you&#8217;ll typical want to compile the source code, run the tests and assemble the JAR artifact. That&#8217;s no different for Gradle plugins. The following command achieves exactly that:</p>
 </div>
@@ -180,7 +191,7 @@ https://gradle.com/s/7mtynxxmesdio</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="using_travis_ci"><a class="anchor" href="#using_travis_ci"></a><a class="link" href="#using_travis_ci">Using Travis CI</a></h2>
+<h2 id="configuring_travis_ci"><a class="anchor" href="#configuring_travis_ci"></a><a class="link" href="#configuring_travis_ci">Configuring Travis CI</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Travis CI is a free, cloud-based CI solution provider making it an excellent choice for open source projects.
@@ -218,8 +229,17 @@ After activating the repository from the dashboard, the project is ready to be b
 <img src="images/travis-enable-project.png" alt="Enabling a project">
 </div>
 </div>
-<div class="paragraph">
-<p>Unfortunately, Travis CI does not render a convenience icon for build scans.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Configuring <a href="https://scans.gradle.com/">build scans</a> is especially helpful on cloud CI systems like Travis CI because it has additional environment and test results information that are difficult to obtain otherwise.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -227,7 +247,7 @@ After activating the repository from the dashboard, the project is ready to be b
 <div class="paragraph">
 <p>Gradle&#8217;s dependency management mechanism resolves declared modules and their corresponding artifacts from a binary repository.
 Once downloaded, the files will be re-used from the cache.
-You need to tell Travis CI explictly that you want to <a href="https://docs.travis-ci.com/user/languages/java/#Caching">store and use the Gradle cache and Wrapper</a> for successive invocations of the build.</p>
+You need to tell Travis CI explicitly that you want to <a href="https://docs.travis-ci.com/user/languages/java/#Caching">store and use the Gradle cache and Wrapper</a> for successive invocations of the build.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -266,8 +286,7 @@ cache:
 <div class="paragraph">
 <p>Executing Gradle builds on CI can be set up and configured with just a handful of steps.
 The benefit of receiving fast feedback clearly speaks for itself.
-You are not using Travis CI?
-No problem, many CI products tightly integrate with Gradle as a first-class citizen.</p>
+If you are not using Travis CI, no problem, many CI products tightly integrate with Gradle as a first-class citizen.</p>
 </div>
 </div>
 </div>
