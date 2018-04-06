@@ -104,7 +104,7 @@
 <ul class="sectlevel1">
 <li><a href="#what_you_ll_need">What you&#8217;ll need</a></li>
 <li><a href="#setup_a_typical_project">Setup a typical project</a></li>
-<li><a href="#configuring_travis_ci">Configuring Travis CI</a></li>
+<li><a href="#configure_travis_ci">Configure Travis CI</a></li>
 <li><a href="#summary">Summary</a></li>
 <li><a href="#help_improve_this_guide">Help improve this guide</a></li>
 </ul>
@@ -191,7 +191,7 @@ https://gradle.com/s/7mtynxxmesdio</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="configuring_travis_ci"><a class="anchor" href="#configuring_travis_ci"></a><a class="link" href="#configuring_travis_ci">Configuring Travis CI</a></h2>
+<h2 id="configure_travis_ci"><a class="anchor" href="#configure_travis_ci"></a><a class="link" href="#configure_travis_ci">Configure Travis CI</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Travis CI is a free, cloud-based CI solution provider making it an excellent choice for open source projects.
@@ -200,7 +200,7 @@ Travis CI doesn&#8217;t not provide built-in options to post-process produced ar
 You will have to use external services (like S3) to <a href="https://docs.travis-ci.com/user/uploading-artifacts/">transfer the files</a>.</p>
 </div>
 <div class="sect2">
-<h3 id="creating_the_configuration_file"><a class="anchor" href="#creating_the_configuration_file"></a><a class="link" href="#creating_the_configuration_file">Creating the configuration file</a></h3>
+<h3 id="create_the_configuration_file"><a class="anchor" href="#create_the_configuration_file"></a><a class="link" href="#create_the_configuration_file">Create the configuration file</a></h3>
 <div class="paragraph">
 <p>Travis CI requires you to check in a <a href="https://docs.travis-ci.com/user/customizing-the-build/">configuration file</a> with your source code named <code>.travis-ci.yml</code>.
 This file contains all relevant instructions for building the project.</p>
@@ -243,7 +243,7 @@ Configuring <a href="https://scans.gradle.com/">build scans</a> is especially he
 </div>
 </div>
 <div class="sect2">
-<h3 id="enabling_caching_of_downloaded_artifacts"><a class="anchor" href="#enabling_caching_of_downloaded_artifacts"></a><a class="link" href="#enabling_caching_of_downloaded_artifacts">Enabling caching of downloaded artifacts</a></h3>
+<h3 id="enable_caching_of_downloaded_artifacts"><a class="anchor" href="#enable_caching_of_downloaded_artifacts"></a><a class="link" href="#enable_caching_of_downloaded_artifacts">Enable caching of downloaded artifacts</a></h3>
 <div class="paragraph">
 <p>Gradle&#8217;s dependency management mechanism resolves declared modules and their corresponding artifacts from a binary repository.
 Once downloaded, the files will be re-used from the cache.
